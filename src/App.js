@@ -7,6 +7,21 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // import CssBaseline from '@material-ui/core/CssBaseline';
 import Login from './screens/login'
+import firebase from 'firebase/app'
+import 'firebase/database'
+import {useObject} from 'react-firebase-hooks/database'
+
+firebase.initializeApp({
+    apiKey: "AIzaSyAtero6KmimwmApvVXnIgk4DL4aniv8Xb8",
+    authDomain: "sansahack2.firebaseapp.com",
+    databaseURL: "https://sansahack2-default-rtdb.firebaseio.com",
+    projectId: "sansahack2",
+    storageBucket: "sansahack2.appspot.com",
+    messagingSenderId: "575574269166",
+    appId: "1:575574269166:web:3df69fadd19fa7fd9667ff"
+})
+const database = firebase.database()
+
 function App() {
   // if('serviceWorker' in navigator) {
   //   navigator.serviceWorker.register('./sw.js')
@@ -26,7 +41,7 @@ function App() {
     const changeAuth = (boolean) => {
       setAuth(boolean)
     }
-    const [prefersDarkMode,setPrefersDarkMode] = useState(localStorage.getItem('theme')==='true'?  true:true);
+    const [prefersDarkMode,setPrefersDarkMode] = useState(localStorage.getItem('theme')==='true'?  true:false);
     if(localStorage.getItem('accents')===null){
         localStorage.setItem('accents',JSON.stringify({
           dark:{
@@ -112,7 +127,7 @@ function App() {
         <div style={{height:'100vh',color:theme?'#eee':'#212121',overflow: 'hidden',}}>
           {/* <div style={{left:0,top:0,zIndex:3000,backgroundColor:'#666',width:'10vh',width:'10vw'}}>{matches.toString()}</div> */}
           {auth===true?
-          <Screen desktop={desktop} theme={theme} darkMode={prefersDarkMode} changeAccents={changeAccents} changeTheme={changeTheme} stlye={{width:'100vw',height:'100vh'}}/>
+          <Screen desktop={desktop} database={database} theme={theme} darkMode={prefersDarkMode} changeAccents={changeAccents} changeTheme={changeTheme} stlye={{width:'100vw',height:'100vh'}}/>
           :
           <Login desktop={desktop} theme={theme} changeAuth={changeAuth}/>
           }

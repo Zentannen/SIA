@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-export default function Screen({desktop,theme}){
+export default function Screen({desktop,theme,database}){
     const classes = useStyles();
     const [screen,setScreen] = useState(0)
     const [sidebarOpen,setSidebarOpen]=useState(false)
@@ -124,19 +124,36 @@ export default function Screen({desktop,theme}){
                 keepMounted
                 >
                 <div className={classes.root} style={{backgroundColor:theme.theme?'#212121':'#eee'}}>
-                    <Paper elevation={0} square>
-                        <Toolbar className={classes.toolbar} position='absolute'>
-                            <Typography>Noftications</Typography>
-                            <IconButton onClick={()=>changeNotificationScreenOpen(false)} color="secondary">
-                                <Close/>
-                            </IconButton>
-                        </Toolbar>
-                    </Paper>
-                    <Divider/>
+                    <Toolbar/>
+                    <div style={{position: 'absolute',top:0,width:'100%'}}>
+                        <Paper elevation={0} square>
+                            <Toolbar className={classes.toolbar} position='absolute'>
+                                <Typography>Noftications</Typography>
+                                <IconButton onClick={()=>changeNotificationScreenOpen(false)} color="secondary">
+                                    <Close/>
+                                </IconButton>
+                            </Toolbar>
+                        </Paper>
+                        <Divider/>
+                    </div>
                     <div style={{width:'90vw',margin:'5vh 10vw'}}>
-                        <Typography className={classes.typography}>Solar flare</Typography>
+                        <Typography color="secondary" className={classes.typography}>Solar flare</Typography>
                         <Paper style={{width:'80vw',minHeight:desktop?'':'20vh',padding:'2vh 2vw',margin:'1vh 0'}}>
-                            {`A solar flare was detected at at Thu Jan 26 2017 11:00:00 GMT+1100, and should reach earth within the next 20 minutes. A solar flare can seriously damage electronics. One can help avoid these damages by unplugging devices or contacting the relative experts.`} Read <Link color="secondary">here</Link> for more.
+                            {`A solar flare was detected at at Fri Feb 26 2019 11:00:00 GMT+1100, and should reach earth within the next 20 minutes. A solar flare can seriously damage electronics. One can help avoid these damages by unplugging devices or contacting the relative experts.`} Read <Link color="secondary">here</Link> for more.
+                        </Paper>
+                    </div>
+
+                    <div style={{width:'90vw',margin:'5vh 10vw'}}>
+                        <Typography color="secondary" className={classes.typography}>Record high solar winds</Typography>
+                        <Paper style={{width:'80vw',minHeight:desktop?'':'20vh',padding:'2vh 2vw',margin:'1vh 0'}}>
+                            {`Record high solar winds were detected at Thu Jan 26 2017 11:00:00 GMT+1100, and reached the earth in the 10 minutes after they were detected. These winds destroyed many electronics, and seriously damaged many more others . One can help avoid future damages by unplugging devices or contacting the relative experts.`} Read <Link color="secondary">here</Link> for more.
+                        </Paper>
+                    </div>
+
+                    <div style={{width:'90vw',margin:'5vh 10vw'}}>
+                        <Typography color="secondary" className={classes.typography}>Giant solar flare just misses earth</Typography>
+                        <Paper style={{width:'80vw',minHeight:desktop?'':'20vh',padding:'2vh 2vw',margin:'1vh 0'}}>
+                            {`A massive solar flare was detected at at Thu Jan 26 2012 11:00:00 GMT+1100, and just missed earth. A solar flare of such magnitude would cause incredible damage and would take 5 to 10 years to repair. There is not much you could do to protect your electronics from a solar flare of this magnitude.`} Read <Link color="secondary">here</Link> for more.
                         </Paper>
                     </div>
                 </div>
@@ -144,11 +161,11 @@ export default function Screen({desktop,theme}){
             <Toolbar/>
             <>
             {screen===0?
-            <Forecast desktop={desktop} theme={theme}/>
+            <Forecast desktop={desktop} theme={theme} database={database}/>
             :screen===1?
             <Resources/>
             :screen===2?
-            <Team/>
+            <Team desktop={desktop}/>
             :null
             }
             </>
