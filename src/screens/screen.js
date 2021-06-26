@@ -71,7 +71,7 @@ export default function Screen({desktop,theme}){
             icon:<Group/>
         },
     ]
-    const gapires = async() => {
+    const gapires = () => {
         setNotificationCount(notificationCount+1);
 
     }
